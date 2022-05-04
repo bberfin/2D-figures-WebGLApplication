@@ -1,0 +1,102 @@
+<html>
+	<body>
+
+	<canvas id="glcanvas" width="650" height="600"></canvas>
+
+	<div>
+		<br><b><font color="red" size="4"> SCALE :</font><br></b>
+		enlarge
+		<input type="range" id="slide"
+		min="-0.8" max="20.0" step="0.1" value="0.0">
+		minimize
+		<br>
+        Scale by X (translate) <b> - </b>
+        <input id="scale_x" type="range" min="-2.0" max="4.0" step="0.15" value="1.0" />
+        <b> + </b>
+        <br>
+        Scale by Y (translate)<b> - </b>
+        <input id="scale_y" type="range" min="-2.0" max="4.0" step="0.15" value="1.0" />
+        <b> + </b>
+        <br>
+	</div>
+
+	<div>
+		<br> <b> <font color="red" size="4"> REPOSITION :</font> </b>
+	    <br> (on the x-axis)
+		<button id="left_x"> <font color="blue" >LEFT</font></button>
+		<button id="right_x"><font color="blue" >RIGHT</font> </button>		
+	</div>
+	
+	
+	<div>
+		<br>(on the y-axis)
+		<button id="up_y"><font color="blue" >UP</font></button>
+		<button id="down_y"><font color="blue" >DOWN</font></button>		
+	</div>
+
+
+	<div >
+		<br>
+	    <b><font color="red" size="4">CHANGE THE COLOR :</font> </b>
+		<select name="colors" id="color" >
+			<option value="white"> WHITE </option>			
+			<option value="red"> RED </option>
+			<option value="blue"> BLUE </option>
+			<option value="green"> GREEN </option>
+			<option value="random"> RANDOM </option>
+		</select> 
+
+		<button id="ColorButton" >
+		Select
+	   </button>
+	</div>
+
+
+	<div>
+		<br><b> <font color="red" size="4"> ROTATE :</font>	</b>
+		<button id="stopButton"><font color="red">STOP</font></button>
+		<button id="startButton"> <font color="green" >START</font> </button>	<br>
+		   change the direction of the rotating : press <font color="blue">"R"</font> key on keyboard <br>
+		   set the rotation speed : press the  <font color="blue">"+"</font> (add) or 
+		   <font color="blue">"-"</font> (substract) keys on keyboard
+	</div>
+
+
+</body>
+
+<script id="vertexShaderId" type="x-shader/x-vertex">
+
+	attribute vec4 vPosition; 
+	uniform  float theta;
+	uniform vec4 relocate ;
+    uniform  float sizeC;
+    uniform  float sizeX;
+    uniform  float sizeY;
+
+	void main(){
+		gl_Position.x = (cos(theta) * vPosition.x - sin(theta) * vPosition.y)* sizeX ;
+		gl_Position.y = (sin(theta) * vPosition.x + cos(theta) * vPosition.y)* sizeY;
+		gl_Position.z = 0.0  ;
+		gl_Position.w = 1.0 + sizeC ;
+
+		gl_Position = gl_Position + relocate; }
+
+</script>	
+
+
+<script id="fragmentShaderId" type="x-shader/x-fragment">
+		precision mediump float;
+		uniform vec4 fColor;
+
+		void main(){
+			gl_FragColor= fColor; }
+
+</script>	
+
+<script src="19291082.js"></script>
+<script src="../common/initShaders.js"></script>
+<script src="../common/MV.js"></script>
+<script src="../common/webgl-utils.js"></script>
+
+
+</html>
